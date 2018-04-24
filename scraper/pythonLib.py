@@ -27,15 +27,6 @@ def source_to_soup(page_source):
     soup = BeautifulSoup(page_source, 'html5lib')
     return soup
 
-def request_fun(url):
-    headers = {
-        "referer": "https://www.just-eat.co.uk/restaurants-starofbanagal",
-        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36"
-    }
-    r = requests.get(url, headers=headers)
-    soup = BeautifulSoup(r.text, 'html5lib')
-    return soup
-
 
 def read_url_file(filename):
     file = open(filename, "r")

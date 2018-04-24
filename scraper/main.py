@@ -13,10 +13,6 @@ def parse_page(soup):
     rating = soup.find('meta', {'itemprop': 'ratingValue'})['content']
     cuisines = soup.find('p', {'class': 'cuisines'}).get_text().strip()
     address = soup.find('p', {'itemprop': 'address'}).get_text().strip()
-    print("Name ", name)
-    print("rating ", rating)
-    print("cuisines ", cuisines)
-    print("address ", address)
 
     #Extracting menu items
     menu_container = soup.find('div', {'id': 'menu'})
@@ -53,10 +49,7 @@ def parse_page(soup):
                 'price': p_price,
             })
         except Exception as error:
-            print(error)
             pass
-
-    print(products_data)
 
 
 def main():
