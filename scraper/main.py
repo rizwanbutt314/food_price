@@ -3,7 +3,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import sqlite3
-from common.constants import DATABASE
+#from common.constants import DATABASE
 
 #Constants
 url_filename = "urls.txt"
@@ -11,7 +11,7 @@ url_filename = "urls.txt"
 
 def insert_data(data):
     print("Inserting data to database...")
-    con = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect("../database/businesses.db")
     cur = conn.cursor()
 
     # Fill the table
@@ -57,13 +57,6 @@ def parse_page(url, soup):
                 p_description  = product.find('p', {'class': 'description '}).get_text().strip()
                 p_price = product.find('p', {'class': 'price '}).get_text().strip()
 
-            products_data.append({
-                'name': p_name,
-                "sub_name": s_name,
-                'category': category,
-                'description': p_description,
-                'price': p_price,
-            })
             products_data.append((
                 url, name, rating, cuisines, address, p_name, s_name, category, p_description, p_price
                 ))
