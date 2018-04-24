@@ -21,7 +21,8 @@ class BusinessList(Resource):
 
         where_clause = ""
         if request_data['type'] == 'category':
-            where_clause = "WHERE p_category LIKE '%{0}%'".format(request_data['search'])
+            if request_data['search']:
+                where_clause = "WHERE p_category LIKE '%{0}%'".format(request_data['search'])
 
         else:
             if request_data['search']:
@@ -46,7 +47,7 @@ class BusinessList(Resource):
                     'cuisines': row[3],
                     'address': re.sub('[ \t\n]+', ' ', row[4]),
                     'dish_name': row[5],
-                    'dish_sub_name': row[6],
+                    'dish_sub_name': row[6] if row[6] else '---',
                     'dish_category': row[7],
                     'dish_description': row[8],
                     'dish_price': row[9].encode('ascii',errors='ignore'),
