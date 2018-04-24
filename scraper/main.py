@@ -2,13 +2,29 @@ import pythonLib
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+import sqlite3
+from common.constants import DATABASE
 
 #Constants
 url_filename = "urls.txt"
 
 
-def parse_page(soup):
-    print("Parsing page...")
+def insert_data(data):
+    print("Inserting data to database...")
+    con = sqlite3.connect(DATABASE)
+    cur = conn.cursor()
+
+    # Fill the table
+    cur.executemany("""insert into business(url, business_name, rating,
+                        cuisines, address, p_name, p_sub_name, p_category,
+                        p_description, p_price) values (?,?,?,?,?,?,?,?,?,?)""", data)
+    conn.commit()
+    conn.close()
+    print("Completed!")
+    
+
+def parse_page(url, soup):
+    print("Extracting Data...")
     name = soup.find('h1', {'itemprop': 'name'}).get_text().strip()
     rating = soup.find('meta', {'itemprop': 'ratingValue'})['content']
     cuisines = soup.find('p', {'class': 'cuisines'}).get_text().strip()
@@ -48,9 +64,14 @@ def parse_page(soup):
                 'description': p_description,
                 'price': p_price,
             })
+            products_data.append((
+                url, name, rating, cuisines, address, p_name, s_name, category, p_description, p_price
+                ))
         except Exception as error:
             pass
 
+    insert_data(products_data)
+    
 
 def main():
     urls = pythonLib.read_url_file(url_filename)
@@ -60,7 +81,7 @@ def main():
         driver.get(url)
         time.sleep(3)
         soup = pythonLib.source_to_soup(driver.page_source)
-        parse_page(soup)
+        parse_page(url, soup)
 
         break
 
