@@ -48,7 +48,7 @@ $( document ).ready(function(e) {
                                 </div>\
                                 <div class="specs">\
                                     <label>Price</label>\
-                                    <span>'+_object.dish_price+'</span>\
+                                    <span>£'+_object.dish_price+'</span>\
                                 </div>\
                                 <div class="specs">\
                                     <label>Rating</label>\
