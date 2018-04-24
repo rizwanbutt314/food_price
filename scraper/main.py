@@ -76,7 +76,7 @@ def main():
         soup = pythonLib.source_to_soup(driver.page_source)
         parse_page(url, soup)
 
-        break
+        #break
 
 
 main()
