@@ -24,7 +24,8 @@ def run_migrations():
                      (  url text, business_name text,
                         rating text, cuisines text, address text,
                         p_name text, p_sub_name text, p_category text,
-                        p_description text, p_price text)''')
+                        p_description text, p_price text,
+                        street text, city text, postcode text)''')
     # Save (commit) the changes
     conn.commit()
 

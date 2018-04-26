@@ -14,7 +14,20 @@ class BusinessList(Resource):
         request_data = parse_request_arguments(BUSINESS_PARAMS)
         conn = sqlite3.connect("database/businesses.db")
         cur = conn.cursor()
+        cur1 = conn.cursor()
 
+        postcode_query = """
+            SELECT COUNT(*) WHERE postcode={0}
+        """.format(request_data['postcode'].upper())
+        cur1.execute(postcode_query)
+        count = cur1.fetchone()
+
+        if count[0] < 1:
+            return make_response(jsonify({
+                "error": "postcode not found",
+            }), 500)
+
+        
         init_query = """
                 SELECT * FROM business
         """

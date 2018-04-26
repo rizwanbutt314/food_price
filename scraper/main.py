@@ -17,7 +17,7 @@ def insert_data(data):
     # Fill the table
     cur.executemany("""insert into business(url, business_name, rating,
                         cuisines, address, p_name, p_sub_name, p_category,
-                        p_description, p_price) values (?,?,?,?,?,?,?,?,?,?)""", data)
+                        p_description, p_price, street, city, postcode) values (?,?,?,?,?,?,?,?,?,?,?,?,?)""", data)
     conn.commit()
     conn.close()
     print("Completed!")
@@ -28,7 +28,11 @@ def parse_page(url, soup):
     name = soup.find('h1', {'itemprop': 'name'}).get_text().strip()
     rating = soup.find('meta', {'itemprop': 'ratingValue'})['content']
     cuisines = soup.find('p', {'class': 'cuisines'}).get_text().strip()
-    address = soup.find('p', {'itemprop': 'address'}).get_text().strip()
+    address_tag = soup.find('p', {'itemprop': 'address'})
+    address = address_tag.get_text().strip()
+    street = address_tag.find('span', {'id': 'street'}).get_text().strip()
+    city = address_tag.find('span', {'id': 'city'}).get_text().strip()
+    postcode = address_tag.find('span', {'id': 'postcode'}).get_text().strip()
 
     #Extracting menu items
     menu_container = soup.find('div', {'id': 'menu'})
@@ -58,7 +62,7 @@ def parse_page(url, soup):
                 p_price = product.find('p', {'class': 'price '}).get_text().strip()
 
             products_data.append((
-                url, name, rating, cuisines, address, p_name, s_name, category, p_description, p_price
+                url, name, rating, cuisines, address, p_name, s_name, category, p_description, p_price, street, city, postcode
                 ))
         except Exception as error:
             pass

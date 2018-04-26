@@ -7,4 +7,5 @@ BUSINESS_PARAMS = [
         'search',
         'type',
         'limit',
+        'postcode',
     ]
