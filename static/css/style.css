@@ -96,7 +96,7 @@ a {
 }
 
 .filters .form-panel {
-    width: 24%;
+    width: 20%;
     vertical-align: middle;
     display: inline-block;
     margin-right: 12px; 
@@ -359,7 +359,7 @@ cursor: pointer;
 }
 
 .container .job_panel .panel .job_actions .job_specs .specs {
-    width: 22%;
+    width: 17%;
     vertical-align: middle;
     text-align: left;
     display: block;

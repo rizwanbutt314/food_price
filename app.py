@@ -9,7 +9,6 @@ app = Flask(__name__)
 api = Api(app)
 
 # Routes
-#api.add_resource(AppDetail, '/', endpoint="home")
 api.add_resource(BusinessList, '/businesses', endpoint="businesses")
 
 @app.route('/')
